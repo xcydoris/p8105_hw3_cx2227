@@ -1,0 +1,28 @@
+---
+title: "p8105_hw3_cx2227"
+author: "Chuyue Xiang"
+date: "10/10/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggridges)
+```
+
+## Problem 1
+
+```{r, results='hide'}
+library(p8105.datasets)
+data("instacart")
+
+str(instacart)
+```
+
+### Short description 
+- The `instacart` dataset has 1384617 observations and 15 variables.
+- There are 4 character variables and 11 numeric variables.
+- This dataset contains data of various products.
+- Some of the key variables are order_id, product_id, aisle_id, and days_since_prior_order.
+- For example, Bulgarian Yogurt with prouct id 49302 has been reordered once 9 days since the prior order.
