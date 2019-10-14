@@ -59,3 +59,23 @@ instacart %>%
 
 - The number if items ordered from aisle "fresh fruits" and "fresh vegetables" are way more than others, followed by "packaged vegetables fruits" and "yogurt".
 
+
+
+### Part 3: Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
+
+```{r}
+instacart %>% 
+  filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
+  group_by(aisle, product_name) %>% 
+  summarize(tot_order = sum(order_number)) %>% 
+  mutate(ord_ranking = min_rank(desc(tot_order))) %>% 
+  filter(ord_ranking %in% c(1,2,3)) %>% 
+  arrange(aisle, ord_ranking) %>% 
+  knitr::kable()
+```
+ 
+ 
+ - The most popular item in baking ingredients are Light Brown sugar, Cane sugar, and Organix Vanilla Extract.
+ - The most popular item in dog food care are standard size pet waste bags, beef stew canned dog foo, and snack sticks Chicken & Rice Recipe Dog Treats.
+ - The most popular item in packagedd vegetables fruits are organic baby spinach, organix raspberries, and organix blueberries.
+
