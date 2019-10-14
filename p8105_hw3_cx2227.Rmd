@@ -60,7 +60,6 @@ instacart %>%
 - The number if items ordered from aisle "fresh fruits" and "fresh vegetables" are way more than others, followed by "packaged vegetables fruits" and "yogurt".
 
 
-
 ### Part 3: Make a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”. Include the number of times each item is ordered in your table.
 
 ```{r}
@@ -93,7 +92,6 @@ instacart %>%
 
 
  - Purchases are mainly occured on afternoons for both products.
-
 
 
 ## Problem 2
@@ -180,3 +178,22 @@ plot2010
 ```
 
  - The distribution of data_value in response did not change a lot from 2006 to 2010.
+ 
+ 
+ 
+## Problem 3
+
+### Part 1: Load, tidy, and otherwise wrangle the data.
+
+```{r, message=FALSE}
+accel_data = pols_month = read_csv("./data/accel_data.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(
+    weekday_vs_weekend = case_when( 
+      day %in% c("Monday","Tuesday","Wednesday","Thursday","Friday") ~ "Weekday",
+      day %in% c("Saturday","Sunday") ~ "Weekend")) %>% 
+  select(week, day_id, day, weekday_vs_weekend, everything()) 
+```
+
+ - The dataset `accel_data` has `r nrow(accel_data)` observations and 1444 variables. 
+ - There are 1440 variaibles that describe the counts, and other four key variaibles are week, day_id, day, and weekday_vs_weekend.
