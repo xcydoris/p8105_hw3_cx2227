@@ -26,3 +26,36 @@ str(instacart)
 - This dataset contains data of various products.
 - Some of the key variables are order_id, product_id, aisle_id, and days_since_prior_order.
 - For example, Bulgarian Yogurt with prouct id 49302 has been reordered once 9 days since the prior order.
+
+
+### Part 1: How many aisles are there, and which aisles are the most items ordered from?
+
+
+```{r,results='hide'}
+instacart %>% 
+  group_by(aisle) %>% 
+  summarize(n_obs = n()) %>%
+  arrange(desc(n_obs)) 
+```
+- There are 134 aisles.
+- The "fresh vegetables" aisle has the most items.
+
+### Part 2: Make a plot that shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered. Arrange aisles sensibly, and organize your plot so others can read it.
+
+```{r, fig.width=8}
+instacart %>% 
+  group_by(aisle) %>% 
+  summarize(n_obs = n()) %>% 
+  filter(n_obs > 10000) %>% 
+  arrange(aisle) %>% 
+  
+  ggplot(aes(x = aisle, y = n_obs)) + geom_bar(stat = "identity") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  scale_y_continuous(breaks = seq(10000,160000,5000)) + 
+  labs(x = "Aisle names", y = "Number of items ordered") +
+  geom_text(aes(label=n_obs), vjust=-0.3, size=2.5)
+```
+
+- The number if items ordered from aisle "fresh fruits" and "fresh vegetables" are way more than others, followed by "packaged vegetables fruits" and "yogurt".
+
