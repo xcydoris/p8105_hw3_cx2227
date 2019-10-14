@@ -155,3 +155,28 @@ brfss_smart2010 %>%
 ```
 
  - a spaghetti plot might not be the best choice in this situation
+ 
+ 
+### Part 4: Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
+ 
+```{r}
+plot2006 = brfss_smart2010 %>% 
+  filter(year == 2006, response %in% c("Excellent", "Very good", "Good", "Fair","Poor"), locationabbr == "NY") %>% 
+  ggplot(aes(x = response, y = data_value)) + 
+  geom_boxplot() +
+  labs(x = "Response", y = "Data Value", title = "2006") 
+
+plot2006
+```
+
+```{r}
+plot2010 = brfss_smart2010 %>% 
+  filter(year == 2010, response %in% c("Excellent", "Very good", "Good", "Fair","Poor"), locationabbr == "NY") %>% 
+  ggplot(aes(x = response, y = data_value)) + 
+  geom_boxplot() +
+  labs(x = "Response", y = "Data Value", title = "2010")
+
+plot2010
+```
+
+ - The distribution of data_value in response did not change a lot from 2006 to 2010.
