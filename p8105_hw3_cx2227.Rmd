@@ -197,3 +197,46 @@ accel_data = pols_month = read_csv("./data/accel_data.csv") %>%
 
  - The dataset `accel_data` has `r nrow(accel_data)` observations and 1444 variables. 
  - There are 1440 variaibles that describe the counts, and other four key variaibles are week, day_id, day, and weekday_vs_weekend.
+ 
+ 
+
+### Part 2
+
+```{r}
+accel_data %>% 
+  mutate(tot_activity_a_day = rowSums(select(.,activity_1:activity_1440))) %>% 
+  select(week, day_id, day, weekday_vs_weekend, tot_activity_a_day) %>% 
+  mutate(day_int = case_when( 
+    day == "Monday" ~ 1,
+    day == "Tuesday" ~ 2,
+    day == "Wednesday" ~ 3,
+    day == "Thursday" ~ 4,
+    day == "Friday" ~ 5,
+    day == "Saturday" ~ 6,
+    day == "Sunday" ~ 7
+  )) %>% 
+  arrange(week, day_int) %>% 
+  select(week, day, tot_activity_a_day) %>% 
+  pivot_wider(names_from = week, values_from = tot_activity_a_day) %>% 
+  knitr::kable()
+```
+
+ - No obvious trend observed.
+ 
+ 
+### Part 3: Make a single-panel plot
+
+```{r, warning=FALSE, message=FALSE}
+accel_data %>% 
+  mutate(tot_activity_a_day = rowSums(select(.,activity_1:activity_1440))) %>% 
+  select(week, day_id, day, weekday_vs_weekend, tot_activity_a_day) %>% 
+  ggplot(aes(x = week, y = tot_activity_a_day, color = day)) + 
+  geom_point(alpha = 0.3) +
+  geom_smooth(size = 1, se = FALSE) +
+  theme_classic() + 
+  theme(legend.position = "bottom") +
+  labs(x = "Week", y = "Activity counts per day") +
+  scale_y_continuous(labels = scales::comma)
+```
+
+ - From the graph, there is no obvious pattern. 
